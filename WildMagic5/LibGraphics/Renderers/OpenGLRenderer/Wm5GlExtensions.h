@@ -2809,7 +2809,7 @@ GT_EXTERN int GTExistsOpenGL32;
 typedef __int64             int64_t;
 typedef unsigned __int64    uint64_t;
 #endif
-#if defined(__LINUX__)
+#if defined(__LINUX__) || defined(__APPLE__)
 #include <inttypes.h>
 #endif
 
