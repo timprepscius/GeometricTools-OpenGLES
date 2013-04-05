@@ -1,33 +1,47 @@
 CFG ?= Debug
-SYS ?= Linux
-GRF ?= Glx
+SYS ?= Mac
+
+ifeq (Linux,$(findstring Linux,$(SYS)))
+GRF = Glx
+PLATFORM=__LINUX__
+endif
+
+ifeq (Mac,$(findstring Mac,$(SYS)))
+GRF = Glut
+PLATFORM=__APPLE__
+endif
+
+ifeq (Emscripten,$(findstring Emscripten,$(SYS)))
+GRF = Glut
+PLATFORM=__LINUX__
+endif
 
 build :
 	@mkdir -p SDK/Include
-	@mkdir -p SDK/Library/$(CFGDIR)
-	cd LibCore                           && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibMathematics                    && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibImagics                        && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibPhysics                        && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibGraphics                       && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd LibApplications                   && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SampleMathematics                 && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SampleImagics                     && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SamplePhysics                     && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SampleGraphics                    && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
+	@mkdir -p SDK/Library/$(CFG).$(SYS)
+	cd LibCore                           && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibMathematics                    && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibImagics                        && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibPhysics                        && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibGraphics                       && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+	cd LibApplications                   && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SampleMathematics                 && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SampleImagics                     && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SamplePhysics                     && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SampleGraphics                    && make -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
 
 clean :
-	cd LibCore                           && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibMathematics                    && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibImagics                        && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibPhysics                        && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LibGraphics                       && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd LibApplications                   && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SampleMathematics                 && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SampleImagics                     && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SamplePhysics                     && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
-	cd SampleGraphics                    && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF)
+	cd LibCore                           && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibMathematics                    && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibImagics                        && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibPhysics                        && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LibGraphics                       && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+	cd LibApplications                   && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SampleMathematics                 && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SampleImagics                     && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SamplePhysics                     && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
+#	cd SampleGraphics                    && make clean -f makefile.wm5 CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) PLATFORM=$(PLATFORM)
 	@rm -f SDK/Include/*.*
-	@rm -f SDK/Library/$(CFGDIR)/*.*
-	@rmdir SDK/Library/$(CFGDIR)
+	@rm -f SDK/Library/$(CFG).$(SYS)/*.*
+	@rmdir SDK/Library/$(CFG).$(SYS)
 

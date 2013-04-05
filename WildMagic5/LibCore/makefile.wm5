@@ -1,26 +1,20 @@
 CFG ?= Debug
 SYS ?= Linux
+PLATFORM ?= __LINUX__
+OUTDIR := $(CFG).$(SYS)
 
 build :
 	@mkdir -p ../SDK/Include
-	@mkdir -p ../SDK/Library/$(CFG)
-	@mkdir -p $(CFG)
+	@mkdir -p ../SDK/Library/$(OUTDIR)
+	@mkdir -p $(OUTDIR)
 	@cp -fp *.h ../SDK/Include
-	cd Assert        ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd DataTypes     ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd InputOutput   ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Memory        ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd ObjectSystems ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Threading     ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Time          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
+	cd Assert        ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd DataTypes     ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd InputOutput   ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Memory        ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd ObjectSystems ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Threading     ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Time          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
 
 clean :
-	cd Assert        ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd DataTypes     ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd InputOutput   ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Memory        ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd ObjectSystems ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Threading     ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Time          ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	@rm -f $(CFG)/*.*
-	@rmdir $(CFG)
+	rm -rf $(OUTDIR)

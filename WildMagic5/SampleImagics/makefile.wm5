@@ -4,7 +4,7 @@ GRF ?= Glx
 
 build :
 	cd AdaptiveSkeletonClimbing2 ; make CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=AdaptiveSkeletonClimbing2
-	cd AdaptiveSkeletonClimbing3 ; make CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=AdaptiveSkeletonClimbing3
+#	cd AdaptiveSkeletonClimbing3 ; make CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=AdaptiveSkeletonClimbing3
 	cd BinaryOperations          ; make CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=BinaryOperations
 	cd ConformalMapping          ; make CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=ConformalMapping
 	cd ExtractLevelCurves        ; make CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=ExtractLevelCurves
@@ -18,7 +18,7 @@ build :
 
 clean :
 	cd AdaptiveSkeletonClimbing2 ; make clean CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=AdaptiveSkeletonClimbing2
-	cd AdaptiveSkeletonClimbing3 ; make clean CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=AdaptiveSkeletonClimbing3
+#	cd AdaptiveSkeletonClimbing3 ; make clean CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=AdaptiveSkeletonClimbing3
 	cd BinaryOperations          ; make clean CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=BinaryOperations
 	cd ConformalMapping          ; make clean CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=ConformalMapping
 	cd ExtractLevelCurves        ; make clean CFG=$(CFG) SYS=$(SYS) GRF=$(GRF) -f ../makeapp.wm5 APP=ExtractLevelCurves

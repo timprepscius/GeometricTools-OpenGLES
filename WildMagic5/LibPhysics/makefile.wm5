@@ -1,24 +1,19 @@
 CFG ?= Debug
 SYS ?= Linux
+PLATFORM ?= __LINUX__
+OUTDIR := $(CFG).$(SYS)
 
 build :
 	@mkdir -p ../SDK/Include
-	@mkdir -p ../SDK/Library/$(CFG)
-	@mkdir -p $(CFG)
+	@mkdir -p ../SDK/Library/$(OUTDIR)
+	@mkdir -p $(OUTDIR)
 	@cp -fp *.h ../SDK/Include
-	cd Fluid              ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd CollisionDetection ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Intersection       ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LCPSolver          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd ParticleSystem     ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd RigidBody          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
+	cd Fluid              ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd CollisionDetection ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Intersection       ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd LCPSolver          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd ParticleSystem     ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd RigidBody          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
 
 clean :
-	cd Fluid              ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd CollisionDetection ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Intersection       ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd LCPSolver          ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd ParticleSystem     ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd RigidBody          ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	@rm -f $(CFG)/*.*
-	@rmdir $(CFG)
+	rm -rf $(OUTDIR)

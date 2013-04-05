@@ -1,13 +1,18 @@
 CFG ?= Debug
 SYS ?= Linux
 
-CFLAGS := -c -D__LINUX__
+CFLAGS := -c -D$(PLATFORM)
 ARFLAGS := rs
 EXT := a
 
-ifeq (linux,$(findstring Linux,$(SYS)))
+ifeq (Linux,$(findstring Linux,$(SYS)))
 CC := /usr/bin/g++
 AR := /usr/bin/ar
+endif
+
+ifeq (Emscripten,$(findstring Emscripten,$(SYS)))
+CC := emcc
+AR := emar
 endif
 
 ifeq (Debug,$(findstring Debug,$(CFG)))
@@ -38,9 +43,10 @@ INC := $(wildcard Wm5*.h) $(wildcard Wm5*.inl)
 INC := $(notdir $(INC))
 SRC := $(wildcard Wm5*.cpp)
 SRC := $(notdir $(SRC))
-OBJDIR := ../$(CFG)
+OUTDIR := $(CFG).$(SYS)
+OBJDIR := ../$(OUTDIR)
 OBJ := $(SRC:%.cpp=$(OBJDIR)/%.o)
-LIB := ../../SDK/Library/$(CFG)/libWm5Core.$(EXT)
+LIB := ../../SDK/Library/$(OUTDIR)/libWm5Core.$(EXT)
 
 build : $(OBJ)
 	$(AR) $(ARFLAGS) $(LIB) $(OBJDIR)/*.o
@@ -50,4 +56,3 @@ $(OBJDIR)/%.o : %.cpp
 	$(CC) $(INCPATH) $(CFLAGS) $< -o $@
 
 clean :
-	rm -f $(OBJDIR)/*.o

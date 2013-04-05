@@ -2,13 +2,18 @@ CFG ?= Debug
 SYS ?= Linux
 GRF ?= Glx
 
-CFLAGS := -c -D__LINUX__ -DWM5_USE_OPENGL
+CFLAGS := -c -D$(PLATFORM) -DWM5_USE_OPENGL
 ARFLAGS := rs
 EXT := a
 
 ifeq (Linux,$(findstring Linux,$(SYS)))
 CC := /usr/bin/g++
 AR := /usr/bin/ar
+endif
+
+ifeq (Emscripten,$(findstring Emscripten,$(SYS)))
+CC := emcc
+AR := emar
 endif
 
 ifeq (Debug,$(findstring Debug,$(CFG)))
@@ -47,9 +52,10 @@ INC := $(wildcard Wm5*.h) $(wildcard Wm5*.inl)
 INC := $(notdir $(INC))
 SRC := $(wildcard Wm5*.cpp)
 SRC := $(notdir $(SRC))
-OBJDIR := ../$(CFG)
+OUTDIR := $(CFG).$(SYS)
+OBJDIR := ../$(OUTDIR)
 OBJ := $(SRC:%.cpp=$(OBJDIR)/%.o)
-LIB := ../../SDK/Library/$(CFG)/libWm5$(GRF)Graphics.$(EXT)
+LIB := ../../SDK/Library/$(OUTDIR)/libWm5$(GRF)Graphics.$(EXT)
 
 build : $(OBJ)
 	$(AR) $(ARFLAGS) $(LIB) $(OBJDIR)/*.o
@@ -59,4 +65,4 @@ $(OBJDIR)/%.o : %.cpp
 	$(CC) $(INCPATH) $(CFLAGS) $< -o $@
 
 clean :
-	rm -f $(OBJDIR)/*.o
+	rm -rf $(OBJDIR)

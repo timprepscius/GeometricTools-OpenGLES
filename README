@@ -1,6 +1,10 @@
-This repository is a rip from:
+This repository is based off of:
 
 http://www.geometrictools.com
 By Dave Eberly.
 
-Please visit his website for more information.
+
+Changes are incorporated to handle OpenGLES on the iPhone and 
+as well to support Emscripten
+
+-tim

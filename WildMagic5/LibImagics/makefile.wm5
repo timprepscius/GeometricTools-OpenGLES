@@ -1,24 +1,19 @@
 CFG ?= Debug
-SYS ?= linux
+SYS ?= Linux
+PLATFORM ?= __LINUX__
+OUTDIR := $(CFG).$(SYS)
 
 build :
 	@mkdir -p ../SDK/Include
-	@mkdir -p ../SDK/Library/$(CFG)
-	@mkdir -p $(CFG)
+	@mkdir -p ../SDK/Library/$(OUTDIR)
+	@mkdir -p $(OUTDIR)
 	@cp -fp *.h ../SDK/Include
-	cd BinaryOperations ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Extraction       ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Filters          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Images           ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd RasterDrawing    ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Segmenters       ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
+	cd BinaryOperations ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Extraction       ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Filters          ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Images           ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd RasterDrawing    ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
+	cd Segmenters       ; make -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS) PLATFORM=$(PLATFORM)
 
 clean :
-	cd BinaryOperations ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Extraction       ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Filters          ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Images           ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd RasterDrawing    ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	cd Segmenters       ; make clean -f ../makeprj.wm5 CFG=$(CFG) SYS=$(SYS)
-	@rm -f $(CFG)/*.*
-	@rmdir $(CFG)
+	rm -rf $(OUTDIR)
